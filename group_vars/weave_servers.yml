@@ -9,6 +9,6 @@ weave_proxy_args: '--rewrite-inspect'
 weave_router_args: ''
 weave_version: 1.7.2
 scope_enabled: true
-weave_scope_peers: ''
+scope_launch_peers: ''
 proxy_env: 
   none: none

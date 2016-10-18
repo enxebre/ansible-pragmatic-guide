@@ -9,7 +9,7 @@
         name: pyyaml
         version: 3.11
   tags:
-  - deployment
+    - deployment
 
 - hosts: aws
   environment:
