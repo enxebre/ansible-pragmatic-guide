@@ -23,7 +23,6 @@ docker-machine create --driver amazonec2 \
 aws-ansible-workshop
 
 # DigitalOcean
-
 export DOTOKEN=${DOTOKEN}
 docker-machine create --driver digitalocean \
 --digitalocean-access-token $DOTOKEN \

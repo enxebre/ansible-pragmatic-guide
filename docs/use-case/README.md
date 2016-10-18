@@ -328,6 +328,6 @@ You can also check the connection on Scope:
 # Summary
 
 After following all the steps the folder tree wil look like this:
-[summary](images/summary.png)
+![summary](images/summary.png)
 
 You should have now be able to understand the ansible strengths and how to make the most out of it.
