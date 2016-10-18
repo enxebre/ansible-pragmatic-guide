@@ -14,7 +14,7 @@ This tutorial will assume that you have two machines running coreOS on DigitalOc
 
 ## Index
 
-### Theory
+### [Theory](#theory-1)
 
 What is it?
 
@@ -177,7 +177,7 @@ In ```ansible.cfg``` you can see:
 roles_path = roles
 ```
 
-![step-1](images/step-1)
+![step-1](images/step-1.png)
 
 Just run ```ansible-galaxy install -r requirements.yml```
 
@@ -225,7 +225,7 @@ Run ansible:
 ansible-playbook -i inventory playbook.yml
 ```
 
-![step-2](images/step-2)
+![step-2](images/step-2.png)
 
 ### Add a new machine on a different cloud. Inventory groups.
 
@@ -239,7 +239,7 @@ ansible all -i inventory -m ping
 
 You will see it fail for aws01 as the python interpreter is not there yet.
 
-![step-3](images/step-3)
+![step-3](images/step-3.png)
 
 So let's apply the playbook again.
 
@@ -247,7 +247,7 @@ So let's apply the playbook again.
 ansible-playbook -i inventory playbook.yml
 ```
 
-![step-3-ansible](images/step-3-ansible)
+![step-3-ansible](images/step-3-ansible.png)
 
 Now:
 
@@ -255,7 +255,7 @@ Now:
 ansible all -i inventory -m ping
 ```
 
-![step-3-ping](images/step-3-ping)
+![step-3-ping](images/step-3-ping.png)
 
 Nice!
 
@@ -329,11 +329,11 @@ You can run commands remotely from Ansible cli. Lets check that weave is up and 
 ansible all -i inventory -a "/mnt/weave status"
 ```
 
-![step-4-weave](images/step-4-weave)
+![step-4-weave](images/step-4-weave.png)
 
 We should be able to access to the Scope UI on the browser now:
 
-![step-4-weave](images/step-4-weave)
+![step-4-weave](images/step-4-weave.png)
 
 
 ### Templates and accessing variables from other hosts.
@@ -435,9 +435,9 @@ If you check the logs for the ```weaveworks/weave-gs-ubuntu-curl``` container or
 You can also check the connection on Scope:
 
 
-![step-5](images/step-5)
+![step-5](images/step-5.png)
 
-![step-5-containers](images/containers)
+![step-5-containers](images/containers.png)
 
 
 
