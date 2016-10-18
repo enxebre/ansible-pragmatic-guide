@@ -1,2 +1,5 @@
 - src: defunctzombie.coreos-bootstrap
   name: coreos_bootstrap
+
+- src: https://github.com/Capgemini/weave-ansible
+  name: weave

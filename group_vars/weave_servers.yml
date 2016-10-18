@@ -1,0 +1,14 @@
+weave_launch_peers: "
+{%- for host in groups[weave_server_group] -%}
+{%- if host != inventory_hostname -%}
+{{ hostvars[host].ansible_ssh_host }}
+{%- endif -%}
+{%- endfor -%}"
+
+weave_proxy_args: '--rewrite-inspect'
+weave_router_args: ''
+weave_version: 1.7.2
+scope_enabled: true
+scope_launch_peers: ''
+proxy_env: 
+  none: none
