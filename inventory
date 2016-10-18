@@ -1,5 +1,5 @@
-do01 ansible_ssh_host=139.59.182.203
-aws01 ansible_ssh_host=52.51.29.113
+do01 ansible_ssh_host=46.101.87.119
+aws01 ansible_ssh_host=52.49.153.19
 
 [coreos]
 do01

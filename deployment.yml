@@ -1,0 +1,37 @@
+- name: Install pip packages
+  hosts: all:!role=bastion
+  gather_facts: False
+  tasks:
+    - pip:
+        name: docker-py
+        version: 1.9.0
+    - pip:
+        name: pyyaml
+        version: 3.11
+  tags:
+  - deployment
+
+- hosts: aws
+  environment:
+    - DOCKER_HOST: 'unix:///var/run/weave/weave.sock'
+  tasks:
+    - name: spring-hello container
+      docker:
+        hostname: spring-hello.weave.local
+        image:  weaveworks/gs-spring-boot-docker
+        state: started
+  tags:
+    - deployment
+
+- hosts: digitalocean
+  environment:
+    - DOCKER_HOST: 'unix:///var/run/weave/weave.sock'
+  tasks:
+    - name: ubuntu-curl container
+      docker:
+        hostname: ubuntu.weave.local
+        image:  weaveworks/weave-gs-ubuntu-curl
+        command: /bin/bash -c 'while true; do curl -v http://spring-hello.weave.local:8080; sleep 1; done'
+        state: started
+  tags:
+    - deployment

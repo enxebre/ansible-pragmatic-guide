@@ -170,17 +170,20 @@ In ```group_vars/weave_server.yml```
 
 ```
 weave_launch_peers: "
-{% for host in groups[weave_server_group] %}
-  {%- if loop.first %}{% break %}{% endif %}
-  {% if host != inventory_hostname %}
-    {{ hostvars[host].ansible_ssh_host }}
-  {% endif %}
-{% endfor %}"
+{%- if inventory_hostname == groups[weave_server_group][0] -%}
+{%- else -%}
+{%- for host in groups[weave_server_group] -%}
+{%- if host != inventory_hostname -%}
+{{ hostvars[host].ansible_ssh_host }}
+{%- endif -%}
+{%- endfor -%}
+{%- endif -%}"
 
 weave_proxy_args: '--rewrite-inspect'
 weave_router_args: ''
 weave_version: 1.7.2
 scope_enabled: true
+weave_launch_peers: ''
 proxy_env: 
   none: none
 ```
@@ -198,6 +201,9 @@ Add te weave role into our playbook:
 
 ### Templates, conditionals and loops and accessing variables from other hosts.
 
+
+### Tags
+```git tag step-5```
 
 ### Debugging
 

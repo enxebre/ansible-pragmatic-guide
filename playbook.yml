@@ -4,4 +4,8 @@
 - hosts: weave_servers
   roles:
     - weave
-    
+
+- include: deployment.yml
+  when: deployment_enabled
+  tags:
+  - deployment
