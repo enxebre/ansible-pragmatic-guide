@@ -13,5 +13,9 @@
 To follow the use case you'll need to:
 
 ```
-git@github.com:enxebre/ansible-workshop-1.git
+git@github.com:enxebre/ansible-pragmatic-guide.git
 ```
+
+The use case will guide you through the different steps
+
+![steps](images/tags.png)
