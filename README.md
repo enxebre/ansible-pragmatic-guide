@@ -52,7 +52,7 @@ Anisble allows you to define your dependencies with standalone roles in a yaml f
 
 We'll use CoreOS machines in this tutorial. By default Ansible assumes it can find a /usr/bin/python on your remote system. Coreos machines are minimal and do not ship with any version of python. The [coreos-bootstrap role](https://github.com/defunctzombie/ansible-coreos-bootstrap) will install [pypy](http://pypy.org/) for us.
 
-Certain settings in Ansible are adjustable via a configuration file. See https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg for very complete template.
+Certain settings in Ansible are adjustable via a [configuration file](http://docs.ansible.com/ansible/intro_configuration.html). See https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg for very complete template.
 We'll set here the target folder for our community roles
 
 In ```ansible.cfg``` you can see:
@@ -110,6 +110,8 @@ ansible-playbook -i inventory playbook.yml
 
 ### Add a new machine on a different cloud. Inventory groups.
 
+```git tag step-3```
+
 Run
 
 ```
@@ -134,10 +136,69 @@ Nice!
 
 ### Satisfy your needs by overiding role variables.
 
+```git tag step-4```
+
 So far we have used Ansible to set up a python interpreter for the CoreOS machines so we can run Ansible effectively as many modules rely on python.
-In this Step we'll setup a Weave network and Weave Scope between both clouds so docker containers can communicate easily.
+In this Step we'll setup a Weave network and Weave Scope between both clouds so docker containers can communicate with ease.
+
+We add a new role dependency on the requirements.
+
+```
+- src: defunctzombie.coreos-bootstrap
+  name: coreos_bootstrap
+
+- src: https://github.com/Capgemini/weave-ansible
+  name: weave
+``` 
+
+Run
+
+```
+ansible-galaxy install -r requirements.yml
+```
+
+We'll modify the inventory to create a group of hosts belonging to the weave network. By using the ["children"](http://docs.ansible.com/ansible/intro_inventory.html#groups-of-groups-and-group-variables) tag you can create a group of groups
+
+```
+[weave_servers:children]
+digitalocean
+aws
+```
+
+We'll override the weave role variables for satisfying our needs. Ansible allows to create ansible per host, per group, or site wide variables by setting group_vars/all
+In ```group_vars/weave_server.yml```
+
+```
+weave_launch_peers: "
+{% for host in groups[weave_server_group] %}
+  {%- if loop.first %}{% break %}{% endif %}
+  {% if host != inventory_hostname %}
+    {{ hostvars[host].ansible_ssh_host }}
+  {% endif %}
+{% endfor %}"
+
+weave_proxy_args: '--rewrite-inspect'
+weave_router_args: ''
+weave_version: 1.7.2
+scope_enabled: true
+proxy_env: 
+  none: none
+```
+
+Add te weave role into our playbook:
+
+```
+---
+- include: coreos-bootstrap.yml
+
+- hosts: weave_servers
+  roles:
+    - weave
+```
 
 ### Templates, conditionals and loops and accessing variables from other hosts.
 
+
+### Debugging
 
 

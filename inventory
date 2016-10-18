@@ -1,5 +1,5 @@
-do01 ansible_ssh_host=138.68.144.191
-aws01 ansible_ssh_host=52.210.14.248
+do01 ansible_ssh_host=139.59.182.203
+aws01 ansible_ssh_host=52.51.29.113
 
 [coreos]
 do01
@@ -21,3 +21,7 @@ aws01
 
 [aws:vars]
 ansible_ssh_private_key_file=~/.docker/machine/machines/aws-ansible-workshop/id_rsa
+
+[weave_servers:children]
+digitalocean
+aws

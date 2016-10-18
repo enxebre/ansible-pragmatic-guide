@@ -1,2 +1,7 @@
 ---
 - include: coreos-bootstrap.yml
+
+- hosts: weave_servers
+  roles:
+    - weave
+    

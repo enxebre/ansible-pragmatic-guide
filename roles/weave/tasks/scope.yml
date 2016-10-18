@@ -1,0 +1,17 @@
+- name: download scope
+  become: yes
+  become_user: root
+  get_url:
+    url: "{{ scope_url }}"
+    dest: "{{ scope_bin }}"
+    mode: 0755
+    validate_certs: no
+    force: true
+  environment: "{{ proxy_env }}"
+  tags:
+    - scope
+
+- name: run scope
+  command: "{{ scope_bin }} launch {{ scope_launch_peers }}"
+  tags:
+    - scope
