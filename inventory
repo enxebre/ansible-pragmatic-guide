@@ -1,7 +1,9 @@
 do01 ansible_ssh_host=138.68.144.191
+aws01 ansible_ssh_host=52.210.14.248
 
 [coreos]
 do01
+aws01
 
 [coreos:vars]
 ansible_python_interpreter="PATH=/home/core/bin:$PATH python"
@@ -13,3 +15,9 @@ do01
 
 [digitalocean:vars]
 ansible_ssh_private_key_file=~/.docker/machine/machines/do-ansible-workshop/id_rsa
+
+[aws]
+aws01
+
+[aws:vars]
+ansible_ssh_private_key_file=~/.docker/machine/machines/aws-ansible-workshop/id_rsa
