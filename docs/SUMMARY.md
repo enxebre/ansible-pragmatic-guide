@@ -18,3 +18,4 @@
 	* [Overriding role variables](use-case/README.md#overriding-role-variables)
 	* [Templates and variables from other hosts](use-case/README.md#templates-and-variables-from-other-hosts)
 	* [Tags And conditionals](use-case/README.md#tags-and-conditionals)
+	* [Summary](use-case/README.md#summary)

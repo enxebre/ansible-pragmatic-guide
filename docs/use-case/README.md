@@ -324,3 +324,10 @@ You can also check the connection on Scope:
 ![step-5](images/step-5.png)
 
 ![step-5-containers](images/step-5-containers.png)
+
+# Summary
+
+After following all the steps the folder tree wil look like this:
+[summary](images/summary.png)
+
+You should have now be able to understand the ansible strengths and how to make the most out of it.
