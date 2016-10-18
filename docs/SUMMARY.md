@@ -1,5 +1,7 @@
 # Summary
 
+* [Requirements](REQUIREMENTS.md)
+
 * [Concepts](concepts/README.md)
     * [What is Ansible?](concepts/README.md#what-is-ansible)
 	* [Inventory](concepts/README.md#inventory)
