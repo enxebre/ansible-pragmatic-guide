@@ -1,159 +1,16 @@
-# Ansible workshop
+# Overview
 
-This repo is a beginner guide to Ansible.
+This use case will guide you on how to set up of a cross-cloud software defined network for containers using Weave net, Weave Scope and Docker.
 
-It will show you briefly the main concepts and its benefits by example.
+This tutorial will assume that you have two machines running coreOS on DigitalOcean and AWS. You can create them manually or using something like terraform or docker-machine. We provide the docker-machine-bootstrap script so you can use it and modify it for this purpose.
 
-The repo has several git tags starting with the simplest steps and will become a bit more sophisticated every tag.
+At the end we'll deploy two containers one in DigitalOcean, another one in AWS that will communicate with each other.
 
-At the end of this tutorial you'll have automated the set up of a cross-cloud software defined network for containers using Weave netm Weave Scope and Docker.
+As we'll use CoreOS we'll need to install a python interpreter inside the machines. We'll use a community module for this, let's begin...
 
-We'll deploy two containers one in DigitalOcean, another one in AWS that will communicate with each other.
+# Downloading dependencies. Ansible galaxy.
 
-This tutorial will assume that you have two machines running coreOS on DigitalOcean and AWS. You can create them manually or using something like terraform or docker-machine. We provide the docker-machine-bootstrap scrtip so you can use it and modify it for this purpose.
-
-## Index
-
-### [Theory](#theory-1)
-
-- [What is Ansible?](#what-is-ansible)
-
-- [Inventory](#inventory)
-
-- [Playbook - Roles, tasks and modules](#playbook---roles-tasks-and-modules)
-
-- [Variables](#variables)
-
-- [Templates](#templates)
-
-- [Conditionals and loops](#conditionals-and-loops)
-
-- [Debugging](#Debugging)
-
-- [Rolling upgrades](rolling-upgrades)
-
-
-### [Use case](#use-case-1)
-
-- [Downloading dependencies. Ansible galaxy](downloading-dependencies-ansible-galaxy)
-
-- [Boostraping ansible dependencies for CoreOS. The Inventory and the Playbook]()
-
-- Add a new machine on a different cloud. Inventory groups
-
-- Satisfy your needs by overiding role variables
-
-- Tags And conditionals
-
-
-## Theory
-
-### What is Ansible?
-
-https://www.ansible.com/quick-start-video
-
-Ansible is a language to describe infrastructure expectations.
-
-It's Human readable
-
-Agent-less architecture just ssh + python interpreter
-
-Automation engine that runs playbooks.
-
-
-### Inventory
-
-File where you declare the list of hosts that will match the expectations declared in a playbook.
-
-You can specify meaninful groups of hosts in order to decide what systems you are controlling at what times and for what purpose.
-
-You can specify group variables or host variables that will be available later in playbooks and [control how ansible interacts with remote hosts](http://docs.ansible.com/ansible/intro_inventory.html#list-of-behavioral-inventory-parameters.
-
-http://docs.ansible.com/ansible/intro_inventory.html
-
-http://docs.ansible.com/ansible/intro_dynamic_inventory.html
-
-http://docs.ansible.com/ansible/intro_patterns.html
-
-
-### Playbook - Roles, tasks and modules
-
-A playbook is a yml file where you describe the desired state of a host or a group of hosts declared in the inventory.
-
-Ansible ships with a [list of modules](http://docs.ansible.com/ansible/list_of_all_modules.html)
-
-You can create a task using the module that satisfy you necessity.
-
-You can encapsulate a group of meaningfully related tasks in a role.
-
-You can apply roles to hosts in the playbook.
-
-Playbook -> role -> task -> module
-
-
-### Variables
-
-Ansible provides a mechanisim for overriding variables.
-
-You [can go deeply](http://docs.ansible.com/ansible/playbooks_variables.html) on this but a useful guideline to begging with is:
-
-cli extra-vars -> host_vars/hostname.yml -> group_vars/group_name.yml -> group_vars/all.yml -> role defaults
-
-
-
-### Templates
-
-[Templates](http://docs.ansible.com/ansible/template_module.html) are a powerful resource for generating files or scripts on the hosts
-
-A template will have a common structure and it will be populated with specify values at runtime.
-
-
-### Conditionals and loops
-
-You can run roles or tasks depending on a conditional statement.
-
-```
-tasks:
-  - name: "shut down Debian flavored systems"
-    command: /sbin/shutdown -t now
-    when: ansible_os_family == "Debian"
-    # note that Ansible facts and vars like ansible_os_family can be used
-    # directly in conditionals without double curly braces
-```
-
-http://docs.ansible.com/ansible/playbooks_conditionals.html#loops-and-conditionals
-
-
-### Rolling upgrades
-
-[You can run ansible in serial and have control on how many servers you want to run it at one time.](http://docs.ansible.com/ansible/guide_rolling_upgrade.html)
-
-
-### Debugging
-
-```ansible all -i inventory -m setup```
-
-```ansible all -i inventory -m ping```
-
-```ansible all -i inventory -a ls```
-
-```ansible-playbook --list-host -i inventory playbook.yml```
-
-In your playbook:
-
-```
- - hosts: all
-   tasks:
-   - name: Display all variables/facts known for a host
-     debug: var=hostvars
-```
-
-
-## Use case
-
-### Downloading dependencies. Ansible galaxy.
-
-```git tag step-1```
+**Source code:** ```git tag step-1```
 
 Before reinventing the wheel you can try yo reuse.
 [Ansible galaxy](https://galaxy.ansible.com/) is a website for sharing and downloading Ansible roles and a command line tool for managing and creating roles. You can download roles from Ansible galaxy or from your specific git repository.
@@ -181,9 +38,9 @@ roles_path = roles
 
 Just run ```ansible-galaxy install -r requirements.yml```
 
-### Boostraping ansible dependencies for CoreOS. The Inventory and the Playbook.
+# Boostraping ansible dependencies for CoreOS. The Inventory and the Playbook.
 
-```git tag step-2```
+**Source code:** ```git tag step-2```
 
 We'll create an inventory so we can specify the target hosts. You can create meaninful groups for your hosts in order to decide what systems you are controlling at what times and for what purpose.
 
@@ -211,7 +68,8 @@ We'll create a playbook so we can declare our expected configuration for every h
 
 In this step our ```playbook.yml``` will only include the role downloaded previewsly on every coreos machine (just one so far).
 By default.
-```
+
+```yml
 - name: bootstrap coreos hosts
   hosts: coreos
   gather_facts: False
@@ -227,9 +85,37 @@ ansible-playbook -i inventory playbook.yml
 
 ![step-2](images/step-2.png)
 
-### Add a new machine on a different cloud. Inventory groups.
+# Adding a new machine on a different cloud. Inventory groups.
 
-```git tag step-3```
+**Source code:** ```git tag step-3```
+
+We add the new machine into our Inventory file:
+
+```
+do01 ansible_ssh_host=46.101.87.119
+aws01 ansible_ssh_host=52.49.153.19
+
+[coreos]
+do01
+aws01
+
+[coreos:vars]
+ansible_python_interpreter="PATH=/home/core/bin:$PATH python"
+ansible_user=core
+
+
+[digitalocean]
+do01
+
+[digitalocean:vars]
+ansible_ssh_private_key_file=~/.docker/machine/machines/do-ansible-workshop/id_rsa
+
+[aws]
+aws01
+
+[aws:vars]
+ansible_ssh_private_key_file=~/.docker/machine/machines/aws-ansible-workshop/id_rsa
+```
 
 Run:
 
@@ -237,7 +123,7 @@ Run:
 ansible all -i inventory -m ping
 ```
 
-You will see it fail for aws01 as the python interpreter is not there yet.
+You will see it fails for aws01 as the python interpreter is not there yet.
 
 ![step-3](images/step-3.png)
 
@@ -259,9 +145,9 @@ ansible all -i inventory -m ping
 
 Nice!
 
-### Overriding role variables.
+# Overriding role variables.
 
-```git tag step-4```
+**Source code:** ```git tag step-4```
 
 So far we have used Ansible to set up a python interpreter for the CoreOS machines so we can run Ansible effectively as many modules rely on python.
 
@@ -269,7 +155,7 @@ In this Step we'll setup a [Weave network](https://www.weave.works/products/weav
 
 We add a new role dependency on the requirements.
 
-```
+```yml
 - src: defunctzombie.coreos-bootstrap
   name: coreos_bootstrap
 
@@ -295,7 +181,7 @@ We'll override the weave role variables for satisfying our needs. Ansible allows
 
 In ```group_vars/weave_server.yml```
 
-```
+```yml
 weave_launch_peers: "
 {%- for host in groups[weave_server_group] -%}
 {%- if host != inventory_hostname -%}
@@ -314,7 +200,7 @@ proxy_env:
 
 Add te weave role into our playbook:
 
-```
+```yml
 ---
 - include: coreos-bootstrap.yml
 
@@ -336,7 +222,7 @@ We should be able to access to the Scope UI on the browser now:
 ![step-4-weave](images/step-4-weave.png)
 
 
-### Templates and accessing variables from other hosts.
+# Templates and variables from other hosts.
 
 The weave role relies on Ansible templates for generating Systemd scripts:
 
@@ -381,7 +267,7 @@ Weave needs to know the ips of the different host of the network.
 
 This templates are populated at runtime by using ```hostvars``` magic variable.
 
-```
+```yml
 weave_launch_peers: "
 {%- for host in groups[weave_server_group] -%}
 {%- if host != inventory_hostname -%}
@@ -391,9 +277,9 @@ weave_launch_peers: "
 ```
 
 
-### Tags And conditionals
+# Tags And conditionals
 
-```git tag step-5```
+**Source code:** ```git tag step-5```
 
 In this step we'll use the power of [tags](http://docs.ansible.com/ansible/playbooks_tags.html) and conditional in order to deploy some services running on docker so we can test that they can communicate from DigitalOcean to AWS.
 
@@ -438,6 +324,3 @@ You can also check the connection on Scope:
 ![step-5](images/step-5.png)
 
 ![step-5-containers](images/step-5-containers.png)
-
-
-
