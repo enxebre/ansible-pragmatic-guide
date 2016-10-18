@@ -105,11 +105,39 @@ By default.
 Run ansible:
 
 ```
-
+ansible-playbook -i inventory playbook.yml
 ```
 
 ### Add a new machine on a different cloud. Inventory groups.
 
+Run
+
+```
+ansible all -i inventory -m ping
+```
+
+You will see it fail for aws01 as the python interpreter is not there yet. So let's apply the playbook again.
+
+```
+ansible-playbook -i inventory playbook.yml
+```
+
+Now:
+
+```
+ansible all -i inventory -m ping
+```
+
+Image goes here
+
+Nice!
+
 ### Satisfy your needs by overiding role variables.
 
+So far we have used Ansible to set up a python interpreter for the CoreOS machines so we can run Ansible effectively as many modules rely on python.
+In this Step we'll setup a Weave network and Weave Scope between both clouds so docker containers can communicate easily.
+
 ### Templates, conditionals and loops and accessing variables from other hosts.
+
+
+
