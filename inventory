@@ -1,0 +1,26 @@
+do01 ansible_ssh_host=139.59.169.27
+aws01 ansible_ssh_host=52.210.167.207
+
+[coreos]
+aws01
+do01
+
+[coreos:vars]
+ansible_python_interpreter="PATH=/home/core/bin:$PATH python"
+ansible_user=core
+
+[aws]
+aws01
+
+[aws:vars]
+ansible_ssh_private_key_file=~/.docker/machine/machines/aws-sandbox-2/id_rsa
+
+[digitalocean]
+do01
+
+[digitalocean:vars]
+ansible_ssh_private_key_file=~/.docker/machine/machines/coreos-alpha/id_rsa
+
+[weave_servers:children]
+digitalocean
+aws

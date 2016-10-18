@@ -1,0 +1,14 @@
+---
+- include: coreos-bootstrap.yml
+
+# - hosts: all
+#   tasks:
+#   - name: Display all variables/facts known for a host
+#     debug: var=hostvars['do01']
+
+#   - name: Display more
+#     debug: var=inventory_hostname
+
+- hosts: weave_servers
+  roles:
+    - weave
