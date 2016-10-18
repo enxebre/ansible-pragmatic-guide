@@ -6,7 +6,6 @@ This tutorial will assume that you have two machines running coreOS on DigitalOc
 # AWS
 # --amazonec2-access-key AKI******* \
 # --amazonec2-secret-key 8T93C******* \
-
 docker-machine create --driver amazonec2 \
 --amazonec2-region "eu-west-1" \
 --amazonec2-ssh-user core \
