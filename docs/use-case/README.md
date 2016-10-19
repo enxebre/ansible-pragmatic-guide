@@ -337,7 +337,7 @@ You can also check the connection on Scope:
 
 # Summary
 
-After following all the steps the folder tree will look like this:
+After following all the steps your folder tree should look something like this:
 
 ![summary](images/summary.png)
 
