@@ -8,8 +8,11 @@ It's Human readable'
 
 It has agent-less architecture, just need ssh + python interpreter.
 
-It's an automation engine that runs playbooks.
+It's an automation engine that runs playbooks on the machines specified in the inventory.
 
+You can run it from the command line like:
+
+```ansible-playbook -i inventory playbook.yml```
 
 # Inventory
 
