@@ -38,14 +38,17 @@ http://docs.ansible.com/ansible/intro_patterns.html
 A playbook is a yml file where you describe the desired state of a host or a group of hosts declared in the inventory.
 
 Ansible ships with a [list of modules](http://docs.ansible.com/ansible/list_of_all_modules.html).
+
 E.g: [File module](http://docs.ansible.com/ansible/file_module.html)
 
 You can create a task using a module that satisfy you necessity.
+
 E.g: [Create a file in a given folder, with specific user and permissions.](http://docs.ansible.com/ansible/file_module.html#examples)
 
 ```- file: path=/etc/foo.conf owner=foo group=foo mode=0644```
 
 You can encapsulate a group of meaningfully related tasks in a role.
+
 E.g: [Create files and running services for configuring a Weave](https://github.com/Capgemini/weave-ansible)
 
 You can apply roles to hosts in the playbook.
