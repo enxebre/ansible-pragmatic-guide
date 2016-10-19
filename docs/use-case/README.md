@@ -23,11 +23,11 @@ Ansible allows you to define your dependencies with standalone roles in a yaml f
 
 We'll use CoreOS machines in this tutorial. By default Ansible assumes it can find a /usr/bin/python on your remote system. Coreos machines are minimal and do not ship with any version of python. The [coreos-bootstrap role](https://github.com/defunctzombie/ansible-coreos-bootstrap) will install [pypy](http://pypy.org/) for us.
 
-Certain settings in Ansible are adjustable via a [configuration file](http://docs.ansible.com/ansible/intro_configuration.html). [Click here for very complete template](https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg).
+Certain settings in Ansible are adjustable via a [configuration file](http://docs.ansible.com/ansible/intro_configuration.html). [Click here for a very complete template](https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg).
 
 We'll set here the target folder for our community roles
 
-In ```ansible.cfg``` you can see:
+In ```ansible.cfg```:
 
 ```
 [defaults]
