@@ -331,4 +331,4 @@ After following all the steps the folder tree will look like this:
 
 ![summary](images/summary.png)
 
-You should have now be able to understand the ansible strengths and how to make the most out of it.
+You should have now be able to understand the strengths of Ansible and how to make the most out of it.
