@@ -4,20 +4,27 @@ https://www.ansible.com/quick-start-video
 
 Ansible is a language to describe infrastructure expectations.
 
-It's Human readable
+It's Human readable'
 
-Agent-less architecture just ssh + python interpreter
+It has agent-less architecture, just need ssh + python interpreter.
 
-Automation engine that runs playbooks.
+It's an automation engine that runs playbooks.
 
 
 # Inventory
 
-File where you declare the list of hosts that will match the expectations declared in a playbook.
+File where you declare the list of hosts that you want to match the expectations declared in a playbook.
 
-You can specify meaninful groups of hosts in order to decide what systems you are controlling at what times and for what purpose.
+You can specify meaningful groups of hosts in order to decide what systems you are controlling at what times and for what purpose.
 
-You can specify group variables or host variables that will be available later in playbooks and [control how ansible interacts with remote hosts](http://docs.ansible.com/ansible/intro_inventory.html#list-of-behavioral-inventory-parameters.
+You can specify group variables or host variables that will help to [control how ansible interacts with remote hosts](http://docs.ansible.com/ansible/intro_inventory.html#list-of-behavioral-inventory-parameters) and they will be available later in playbooks.
+
+```
+aws01 ansible_ssh_host=52.49.153.19
+
+[coreos]
+do01
+```
 
 http://docs.ansible.com/ansible/intro_inventory.html
 
@@ -30,13 +37,25 @@ http://docs.ansible.com/ansible/intro_patterns.html
 
 A playbook is a yml file where you describe the desired state of a host or a group of hosts declared in the inventory.
 
-Ansible ships with a [list of modules](http://docs.ansible.com/ansible/list_of_all_modules.html)
+Ansible ships with a [list of modules](http://docs.ansible.com/ansible/list_of_all_modules.html).
+E.g: [File module](http://docs.ansible.com/ansible/file_module.html)
 
-You can create a task using the module that satisfy you necessity.
+You can create a task using a module that satisfy you necessity.
+E.g: [Create a file in a given folder, with specific user and permissions.](http://docs.ansible.com/ansible/file_module.html#examples)
+
+```- file: path=/etc/foo.conf owner=foo group=foo mode=0644```
 
 You can encapsulate a group of meaningfully related tasks in a role.
+E.g: [Create files and running services for configuring a Weave](https://github.com/Capgemini/weave-ansible)
 
 You can apply roles to hosts in the playbook.
+
+```
+---
+- hosts: weave_servers
+  roles:
+    - weave
+```
 
 Playbook -> role -> task -> module
 
@@ -45,7 +64,7 @@ Playbook -> role -> task -> module
 
 Ansible provides a mechanisim for overriding variables.
 
-You [can go deeply](http://docs.ansible.com/ansible/playbooks_variables.html) on this but a useful guideline to begging with is:
+You [can go deeply](http://docs.ansible.com/ansible/playbooks_variables.html) on this but a useful guideline to beging with is:
 
 cli extra-vars -> host_vars/hostname.yml -> group_vars/group_name.yml -> group_vars/all.yml -> role defaults
 
@@ -53,10 +72,21 @@ cli extra-vars -> host_vars/hostname.yml -> group_vars/group_name.yml -> group_v
 
 # Templates
 
-[Templates](http://docs.ansible.com/ansible/template_module.html) are a powerful resource for generating files or scripts on the hosts
+[Templates](http://docs.ansible.com/ansible/template_module.html) are a powerful resource for generating files on the hosts
 
-A template will have a common structure and it will be populated with specify values at runtime.
+Templates are processed by the [Jinja2 templating language](http://jinja.pocoo.org/docs/) 
 
+A template will have a common structure and it will be populated with specify variable values at runtime.
+
+[weave.env.j2](https://github.com/enxebre/ansible-pragmatic-guide/blob/master/roles/weave/templates/weave.env.j2)
+
+```
+WEAVE_PEERS="{{ weave_launch_peers }}"
+WEAVEPROXY_ARGS="{{ weave_proxy_args }}"
+WEAVE_ROUTER_ARGS="{{ weave_router_args }}"
+# Uncomment and make it more secure
+# WEAVE_PASSWORD="aVeryLongString"
+```
 
 # Conditionals and loops
 
@@ -81,15 +111,23 @@ http://docs.ansible.com/ansible/playbooks_conditionals.html#loops-and-conditiona
 
 # Debugging
 
+Gather useful variables about remote hosts that can be used in playbooks:
+
 ```ansible all -i inventory -m setup```
+
+Check your machines are reachable. This returns pong on successful contact:
 
 ```ansible all -i inventory -m ping```
 
+Run a bash command on the machines remotely:
+
 ```ansible all -i inventory -a ls```
+
+See how your playbook will apply to the your hosts:
 
 ```ansible-playbook --list-host -i inventory playbook.yml```
 
-In your playbook:
+Print all variables/facts known for a host by adding this into your playbook:
 
 ```
  - hosts: all
@@ -97,3 +135,5 @@ In your playbook:
    - name: Display all variables/facts known for a host
      debug: var=hostvars
 ```
+
+[You can also run Ansible in "check mode"](http://docs.ansible.com/ansible/playbooks_checkmode.html)

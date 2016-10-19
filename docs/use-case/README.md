@@ -1,12 +1,12 @@
 # Overview
 
-This use case will guide you on how to set up of a cross-cloud software defined network for containers using Weave net, Weave Scope and Docker.
+This use case will guide you on how to set up of a cross-cloud software defined network for containers using [Weave net](https://www.weave.works/products/weave-net/), [Weave Scope](https://www.weave.works/products/weave-scope/) and [Docker](https://www.docker.com/).
 
-This tutorial will assume that you have two machines running coreOS on DigitalOcean and AWS. You can create them manually or using something like terraform or docker-machine. We provide the docker-machine-bootstrap script so you can use it and modify it for this purpose.
+See [requirements](../REQUIREMENTS.md)
 
-At the end we'll deploy two containers one in DigitalOcean, another one in AWS that will communicate with each other.
+At the end we'll deploy two containers one in DigitalOcean and another one in AWS that will communicate with each other.
 
-As we'll use CoreOS we'll need to install a python interpreter inside the machines. We'll use a community module for this, let's begin...
+As we'll use CoreOS that are minimal and do not ship with any version of python we'll need to install a python interpreter inside the machines. We'll use an Ansible community module for this, let's begin...
 
 # Downloading dependencies. Ansible galaxy.
 

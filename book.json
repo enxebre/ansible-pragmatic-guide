@@ -1,3 +1,6 @@
 {
-    "root": "./docs"
+    "root": "./docs",
+    "title": "Ansible pragmatic guide",
+    "description": "Learn Ansible by setting up Weave Scope and a cross-cloud Weave network for containers.",
+    "author": "Alberto Garcia Lamela"
 }

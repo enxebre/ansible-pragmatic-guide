@@ -1,6 +1,6 @@
 This tutorial is using **ansible 2.0.2.0**
 
-This tutorial will assume that you have two machines running coreOS on DigitalOcean and AWS. You can create them manually or using something like terraform or docker-machine. We provide the docker-machine-bootstrap script so you can use it and modify it for this purpose.
+This tutorial will assume that you have two machines running coreOS on DigitalOcean and AWS. You can create them manually or using something like [Terraform](https://www.terraform.io/) or [docker-machine](https://docs.docker.com/machine/get-started/). We provide the [docker-machine-bootstrap](https://github.com/enxebre/ansible-pragmatic-guide/blob/master/docker-machine-bootstrap) script so you can use it and modify it for this purpose.
 
 ```bash
 # AWS
@@ -22,3 +22,10 @@ docker-machine create --driver digitalocean \
 --digitalocean-ssh-user core \
 do-ansible-workshop
 ```
+
+We'll use the public ips of these machines to create the weave network. Make sure your aws security groups configuration match the Weave requirements.
+For this demo I used a totally open configuration.
+
+![steps](images/security-groups.png)
+
+If you don't want to create these machines you could use any machine with docker and [systemd](https://www.freedesktop.org/wiki/Software/systemd/) reachable via ssh from where you are running Ansible. 
