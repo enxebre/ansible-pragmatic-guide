@@ -23,7 +23,7 @@ You can specify group variables or host variables that will help to [control how
 aws01 ansible_ssh_host=52.49.153.19
 
 [coreos]
-do01
+aws01
 ```
 
 http://docs.ansible.com/ansible/intro_inventory.html
