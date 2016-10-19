@@ -2,7 +2,7 @@
 
 This use case will guide you on how to set up of a cross-cloud software defined network for containers using [Weave net](https://www.weave.works/products/weave-net/), [Weave Scope](https://www.weave.works/products/weave-scope/) and [Docker](https://www.docker.com/).
 
-See [requirements](../REQUIREMENTS.md)
+See [requirements](../REQUIREMENTS.md).
 
 At the end we'll deploy two containers one in DigitalOcean and another one in AWS that will communicate with each other.
 
