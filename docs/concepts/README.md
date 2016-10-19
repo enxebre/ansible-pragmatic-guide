@@ -4,9 +4,9 @@ https://www.ansible.com/quick-start-video
 
 Ansible is a language to describe infrastructure expectations.
 
-It's Human readable'
+It's human readable.
 
-It has agent-less architecture, just need ssh + python interpreter.
+It has agent-less architecture, it just needs ssh + python interpreter.
 
 It's an automation engine that runs playbooks on the machines specified in the inventory.
 
