@@ -1,5 +1,7 @@
 This tutorial is using **ansible 2.0.2.0**
 
+The source code is here ```git clone git@github.com:enxebre/ansible-pragmatic-guide.git```
+
 This tutorial will assume that you have two machines running coreOS on DigitalOcean and AWS. You can create them manually or using something like [Terraform](https://www.terraform.io/) or [docker-machine](https://docs.docker.com/machine/get-started/). We provide the [docker-machine-bootstrap](https://github.com/enxebre/ansible-pragmatic-guide/blob/master/docker-machine-bootstrap) script so you can use it and modify it for this purpose.
 
 ```bash
