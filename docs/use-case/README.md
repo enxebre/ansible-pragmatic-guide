@@ -10,7 +10,7 @@ As we'll use CoreOS that are minimal and do not ship with any version of python 
 
 # Downloading dependencies. Ansible galaxy.
 
-**Source code:** ```git tag step-1```
+**Source code:** ```git checkout step-1```
 
 Before reinventing the wheel you can try yo reuse.
 [Ansible galaxy](https://galaxy.ansible.com/) is a website for sharing and downloading Ansible roles and a command line tool for managing and creating roles. You can download roles from Ansible galaxy or from your specific git repository.
@@ -40,7 +40,7 @@ Just run ```ansible-galaxy install -r requirements.yml```
 
 # Boostraping ansible dependencies for CoreOS. The Inventory and the Playbook.
 
-**Source code:** ```git tag step-2```
+**Source code:** ```git checkout step-2```
 
 We'll create an inventory so we can specify the target hosts. You can create meaninful groups for your hosts in order to decide what systems you are controlling at what times and for what purpose.
 
@@ -77,6 +77,10 @@ By default.
     - coreos_bootstrap
 ```
 
+The folder tree will look like this now:
+
+![step-2](images/step-2-tree.png)
+
 Run ansible:
 
 ```
@@ -87,7 +91,7 @@ ansible-playbook -i inventory playbook.yml
 
 # Adding a new machine on a different cloud. Inventory groups.
 
-**Source code:** ```git tag step-3```
+**Source code:** ```git checkout step-3```
 
 We add the new machine into our Inventory file:
 
@@ -147,7 +151,7 @@ Nice!
 
 # Overriding role variables.
 
-**Source code:** ```git tag step-4```
+**Source code:** ```git checkout step-4```
 
 So far we have used Ansible to set up a python interpreter for the CoreOS machines so we can run Ansible effectively as many modules rely on python.
 
@@ -207,6 +211,12 @@ Add te weave role into our playbook:
 - hosts: weave_servers
   roles:
     - weave
+```
+
+Run ansible again to configure weave:
+
+```
+ansible-playbook -i inventory playbook.yml
 ```
 
 You can run commands remotely from Ansible cli. Lets check that weave is up and running:
@@ -279,7 +289,7 @@ weave_launch_peers: "
 
 # Tags And conditionals
 
-**Source code:** ```git tag step-5```
+**Source code:** ```git checkout step-5```
 
 In this step we'll use the power of [tags](http://docs.ansible.com/ansible/playbooks_tags.html) and conditional in order to deploy some services running on docker so we can test that they can communicate from DigitalOcean to AWS.
 
